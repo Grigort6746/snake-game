@@ -2,7 +2,6 @@ const canvas = document.getElementById("game-board");
 const ctx = canvas.getContext("2d");
 const currentScoreElement = document.getElementById("current-score");
 const bestScoreElement = document.getElementById("best-score");
-const topPlayersList = document.getElementById("top-players");
 
 const gridSize = 20;
 const tileCount = canvas.width / gridSize;
@@ -12,11 +11,9 @@ let direction = { x: 0, y: 0 };
 let food = { x: 5, y: 5 };
 let score = 0;
 let bestScore = localStorage.getItem("bestScore") || 0;
-let topPlayers = JSON.parse(localStorage.getItem("topPlayers")) || [];
 
-// Обновляем лучший счёт и топ игроков
+// Обновляем лучший счёт
 bestScoreElement.textContent = bestScore;
-updateLeaderboard();
 
 // Отрисовка игры
 function gameLoop() {
@@ -81,27 +78,11 @@ function resetGame() {
         bestScoreElement.textContent = bestScore;
     }
 
-    const playerName = prompt("Введите ваше имя:");
-    if (playerName) {
-        topPlayers.push({ name: playerName, score: score });
-        topPlayers.sort((a, b) => b.score - a.score);
-        topPlayers = topPlayers.slice(0, 5);
-        localStorage.setItem("topPlayers", JSON.stringify(topPlayers));
-        updateLeaderboard();
-    }
-
     snake = [{ x: 10, y: 10 }];
     direction = { x: 0, y: 0 };
     score = 0;
     currentScoreElement.textContent = score;
     placeFood();
-}
-
-// Обновление таблицы лидеров
-function updateLeaderboard() {
-    topPlayersList.innerHTML = topPlayers
-        .map((player, index) => `<li>${index + 1}. ${player.name} - ${player.score}</li>`)
-        .join("");
 }
 
 // Управление с клавиатуры

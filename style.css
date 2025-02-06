@@ -28,10 +28,6 @@ canvas {
     margin: 5px;
 }
 
-.leaderboard {
-    margin-top: 20px;
-}
-
 @media (max-width: 600px) {
     .controls {
         display: block; /* Показываем кнопки на мобильных устройствах */
